@@ -42,7 +42,7 @@ class Decks extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
+    paddingTop: 20,
     paddingHorizontal: 20,
     justifyContent: 'flex-start',
   },

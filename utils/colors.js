@@ -3,6 +3,7 @@ export const black = '#000';
 export const gloomyPurple = '#8854d0';
 export const lighterPurple = '#a55eea';
 export const blueHorizon = '#4b6584';
+export const blueGrey = '#778ca3';
 export const highBlue = '#45aaf2';
 export const orangeHibiscus = '#fd9644';
 export const reptileGreen = '#26de81';
