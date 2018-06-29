@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Platform } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { white, black, blueHorizon, randomColors } from '../utils/colors';
 import { randomItem } from '../utils/helpers';
 
-class Deck extends Component {
+class DeckButton extends Component {
+
   render() {
-    const { name } = this.props;
+    const { item } = this.props;
 
     return (
       <View style={styles.overflowWorkaround}>
         <View style={styles.badge}>
-          <Text style={[ styles.text, { fontSize: 12 } ]}>55</Text>
+          <Text style={[styles.text, { fontSize: 12 }]}>55</Text>
         </View>
-        <View style={[ styles.deck, { backgroundColor: randomItem(randomColors) } ]}>
-          <Text style={styles.text}>{name}</Text>
+        <View style={[styles.deck, { backgroundColor: randomItem(randomColors) }]}>
+          <Text style={styles.text}>{item.name}</Text>
         </View>
       </View>
     );
@@ -56,4 +57,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Deck;
+export default DeckButton;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { blueHorizon } from '../utils/colors';
-import Deck from './Deck';
+import DeckButton from './DeckButton';
 
 class Decks extends Component {
 
@@ -15,12 +15,18 @@ class Decks extends Component {
       { name: 'deck name 6' },
       { name: 'deck name 7' }
     ]
+  };
+
+  static defaultProps = {
+    navigate: args => console.log('Navigate not implemented')
   }
 
   _keyExtractor = (item, index) => item.name;
 
   render() {
     const { data } = this.state;
+    let { navigation } = this.props;
+
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>decks</Text>
@@ -30,7 +36,10 @@ class Decks extends Component {
             style={{ padding: 5 }}
             data={data}
             keyExtractor={this._keyExtractor}
-            renderItem={({ item }) => <Deck name={item.name} />}
+            renderItem={
+              ({ item }) =>
+              <DeckButton item={item} navigate={navigation.navigate} />
+            }
           />
           : <Text style={styles.textWarning}>There are no decks yet!</Text>
         }

@@ -1,40 +1,37 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { createBottomTabNavigator } from 'react-navigation';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import Decks from './components/Decks';
-import NewDeck from './components/NewDeck';
-import { white, gloomyPurple, lighterPurple } from './utils/colors';
+import { createStackNavigator } from 'react-navigation';
+import { Tabs } from './components/Tabs';
+import DeckDetails from './components/DeckDetails';
+import NewCard from './components/NewCard';
+import { white, lighterPurple, gloomyPurple } from './utils/colors';
 
-const Tabs = createBottomTabNavigator(
+const Stack = createStackNavigator(
   {
-    Decks: {
-      screen: Decks,
+    Home: {
+      screen: Tabs,
       navigationOptions: {
-        tabBarLabel: 'decks',
-        tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards-outline' size={30} color={tintColor} />
-      },
+        header: null
+      }
     },
-    NewDeck: {
-      screen: NewDeck,
+    DeckDetails: {
+      screen: DeckDetails,
       navigationOptions: {
-        tabBarLabel: 'new deck',
-        tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='plus' size={30} color={tintColor} />
-      },
+        title: 'Deck Details'
+      }
     },
+    NewCard: {
+      screen: NewCard,
+      navigationOptions: {
+        title: 'Add New Card'
+      }
+    }
   },
   {
     navigationOptions: {
-      header: null
-    },
-    tabBarOptions: {
-      activeTintColor: white,
-      inactiveTintColor: gloomyPurple,
-      labelStyle: {
-        fontSize: 12,
-      },
-      style: {
-        height: 56,
+      headerTintColor: white,
+      headerPressColorAndroid: gloomyPurple,
+      headerStyle: {
         backgroundColor: lighterPurple
       }
     }
@@ -45,7 +42,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Tabs />
+        <Stack />
       </View>
     );
   }
@@ -53,6 +50,7 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: white
   }
 });
