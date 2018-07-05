@@ -6,37 +6,55 @@ import DeckButton from './DeckButton';
 class Decks extends Component {
 
   state = {
-    data: [
-      { name: 'deck name 1' },
-      { name: 'deck name 2' },
-      { name: 'deck name 3' },
-      { name: 'deck name 4' },
-      { name: 'deck name 5' },
-      { name: 'deck name 6' },
-      { name: 'deck name 7' }
-    ]
+    decks: {
+      React: {
+        title: 'React',
+        questions: [
+          {
+            question: 'What is React?',
+            answer: 'A library for managing user interfaces',
+            remember: 'not long'
+          },
+          {
+            question: 'Where do you make Ajax requests in React?',
+            answer: 'The componentDidMount lifecycle event',
+            remember: 'a while'
+          }
+        ]
+      },
+      JavaScript: {
+        title: 'JavaScript',
+        questions: [
+          {
+            question: 'What is a closure?',
+            answer: 'The combination of a function and the lexical environment within which that function was declared.',
+            remember: 'a lot of time'
+          }
+        ]
+      }
+    }
   };
 
-  _keyExtractor = (item, index) => item.name;
+  _keyExtractor = (item, index) => item.title;
 
   render() {
-    const { data } = this.state;
+    const { data, decks } = this.state;
 
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>decks</Text>
         {
-          data.length > 0 ?
-          <FlatList
-            style={{ padding: 5 }}
-            data={data}
-            keyExtractor={this._keyExtractor}
-            renderItem={
-              ({ item }) =>
-              <DeckButton item={item} />
-            }
-          />
-          : <Text style={styles.textWarning}>There are no decks yet!</Text>
+          Object.keys(decks).length > 0
+            ? <FlatList
+                style={{ padding: 5 }}
+                data={Object.keys(decks).map(key => decks[key])}
+                keyExtractor={this._keyExtractor}
+                renderItem={
+                  ({ item }) =>
+                    <DeckButton item={item} />
+                }
+              />
+            : <Text style={styles.textWarning}>There are no decks yet!</Text>
         }
       </View>
     );

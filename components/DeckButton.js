@@ -15,10 +15,10 @@ class DeckButton extends Component {
           <Text style={[ styles.text, { fontSize: 12 } ]}>55</Text>
         </View>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('DeckDetails', { item: { name: item.name } })}
+          onPress={() => this.props.navigation.navigate('DeckDetails', { item: { name: item.title } })}
         >
           <View style={[ styles.deck, { backgroundColor: randomItem(randomColors) } ]}>
-            <Text style={styles.text}>{item.name}</Text>
+            <Text style={styles.text}>{item.title}</Text>
           </View>
         </TouchableOpacity>
       </View>
