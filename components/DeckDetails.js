@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import { blueHorizon, white } from '../utils/colors';
 import DeckItem from './DeckItem';
 
 class DeckDetails extends Component {
-  static defaultProps = {
-    navigate: args => console.log('Navigate not implemented: DeckDetails'),
-    item: {
-      name: 'Default',
-    }
-  }
 
+  static navigationOptions = ({ navigation }) => {
+    const item = navigation.getParam('item', { name: 'Default' });
+    return {
+      title: `${item.name} details`
+    };
+  };
+  
   render() {
-    const { item, navigate } = this.props;
+    const item = this.props.navigation.getParam('item', { name: 'Default' });
 
     return (
       <View style={styles.container}>
@@ -29,7 +31,7 @@ class DeckDetails extends Component {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigate('NewCard', { item: { name: item.name } })} // TODO: this route doesnt work
+          onPress={() => this.props.navigation.navigate('NewCard', { item: { name: item.name } })}
         >
           <Text style={styles.buttonText}>
             add new card
@@ -62,4 +64,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckDetails;
+export default withNavigation(DeckDetails);

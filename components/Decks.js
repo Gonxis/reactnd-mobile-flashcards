@@ -17,15 +17,10 @@ class Decks extends Component {
     ]
   };
 
-  static defaultProps = {
-    navigate: args => console.log('Navigate not implemented')
-  }
-
   _keyExtractor = (item, index) => item.name;
 
   render() {
     const { data } = this.state;
-    let { navigation } = this.props;
 
     return (
       <View style={styles.container}>
@@ -38,7 +33,7 @@ class Decks extends Component {
             keyExtractor={this._keyExtractor}
             renderItem={
               ({ item }) =>
-              <DeckButton item={item} navigate={navigation.navigate} />
+              <DeckButton item={item} />
             }
           />
           : <Text style={styles.textWarning}>There are no decks yet!</Text>

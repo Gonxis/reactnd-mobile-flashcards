@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import { white, black, blueHorizon, randomColors } from '../utils/colors';
 import { randomItem } from '../utils/helpers';
 
 class DeckButton extends Component {
 
-  static defaultProps = {
-    navigate: args => console.log('Navigate not implemented: DeckButton'),
-    item: {
-      name: 'Default',
-    }
-  }
-
   render() {
-    const { item, navigate } = this.props;
+    const { item } = this.props;
 
     return (
       <View style={styles.overflowWorkaround}>
@@ -21,7 +15,7 @@ class DeckButton extends Component {
           <Text style={[ styles.text, { fontSize: 12 } ]}>55</Text>
         </View>
         <TouchableOpacity
-          onPress={() => navigate('DeckDetails', { item: { name: item.name } })}
+          onPress={() => this.props.navigation.navigate('DeckDetails', { item: { name: item.name } })}
         >
           <View style={[ styles.deck, { backgroundColor: randomItem(randomColors) } ]}>
             <Text style={styles.text}>{item.name}</Text>
@@ -68,4 +62,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckButton;
+export default withNavigation(DeckButton);

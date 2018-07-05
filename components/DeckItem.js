@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { white, black, blueHorizon, randomColors } from '../utils/colors';
 import { randomItem } from '../utils/helpers';
 
-class DeckButton extends Component {
+class DeckItem extends Component {
 
   render() {
     const { item } = this.props;
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckButton;
+export default DeckItem;

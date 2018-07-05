@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { withNavigation } from 'react-navigation';
 import { blueHorizon, white, lighterPurple } from '../utils/colors';
 
 class NewCard extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const item = navigation.getParam('item', { name: 'Default' });
+    return {
+      title: `Add card to ${item.name}`
+    };
+  };
+  
+  
   render() {
-    const { item } = this.props;
-
     return (
       <View style={styles.container}>
-        <Text>{item.name}</Text>
         <Text style={styles.heading}>question</Text>
         <TextInput
           style={styles.input}
@@ -25,7 +31,7 @@ class NewCard extends Component {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => { }}
+          onPress={() => {this.props.navigation.goBack()}}
         >
           <Text style={styles.buttonText}>
             save
@@ -69,4 +75,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewCard;
+export default withNavigation(NewCard);

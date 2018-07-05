@@ -15,16 +15,10 @@ const Stack = createStackNavigator(
       }
     },
     DeckDetails: {
-      screen: DeckDetails,
-      navigationOptions: {
-        title: 'Deck Details'
-      }
+      screen: DeckDetails
     },
     NewCard: {
-      screen: NewCard,
-      navigationOptions: {
-        title: 'Add New Card'
-      }
+      screen: NewCard
     }
   },
   {

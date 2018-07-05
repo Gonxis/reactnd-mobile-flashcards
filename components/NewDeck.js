@@ -14,7 +14,7 @@ class NewDeck extends Component {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => { }}
+          onPress={() => { this.props.navigation.goBack() }}
         >
           <Text style={styles.buttonText}>
             save
