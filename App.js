@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { Tabs } from './components/Tabs';
 import DeckDetails from './components/DeckDetails';
 import NewCard from './components/NewCard';
 import { white, lighterPurple, gloomyPurple } from './utils/colors';
+import { Provider } from 'react-redux';
+import Store from './store';
 
 const Stack = createStackNavigator(
   {
@@ -35,9 +37,11 @@ const Stack = createStackNavigator(
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Stack />
-      </View>
+      <Provider store={Store}>
+        <View style={styles.container}>
+          <Stack />
+        </View>
+      </Provider>
     );
   }
 }

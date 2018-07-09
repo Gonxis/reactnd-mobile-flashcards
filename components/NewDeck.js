@@ -1,8 +1,39 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { blueHorizon, white, lighterPurple } from '../utils/colors';
+import { submitDeck } from '../utils/api';
+import { connect } from 'react-redux';
+import { addDeckToAPI } from '../actions';
 
 class NewDeck extends Component {
+
+  state = {
+    deck: {
+      title: '',
+      questions: []
+    }
+  };
+
+  onHandleChange = (text) => {
+    this.setState({
+      deck: {
+        title: text,
+        questions: []
+      }
+    });
+  }
+
+  saveDeck = () => {
+    const { deck } = this.state;
+    const key = deck.title;
+
+    this.props.dispatch(addDeckToAPI(deck, key));
+
+    // submitDeck(key, deck);
+
+    this.props.navigation.goBack();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -11,10 +42,12 @@ class NewDeck extends Component {
           style={styles.input}
           underlineColorAndroid={lighterPurple}
           placeholder="deck name"
+          onChangeText={text => this.onHandleChange(text)}
+          value={this.state.deck.title}
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => { this.props.navigation.goBack() }}
+          onPress={this.saveDeck}
         >
           <Text style={styles.buttonText}>
             save
@@ -58,4 +91,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default NewDeck;
+export default connect()(NewDeck);

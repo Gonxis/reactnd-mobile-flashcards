@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import { blueHorizon, white } from '../utils/colors';
+import { blueHorizon, white, fusionRed } from '../utils/colors';
 import DeckItem from './DeckItem';
+import { deleteDeck } from '../utils/api';
 
 class DeckDetails extends Component {
 
@@ -19,6 +20,15 @@ class DeckDetails extends Component {
     return (
       <View style={styles.container}>
         <DeckItem item={item} />
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={deleteDeck(item.name)}
+        >
+          <Text style={[styles.buttonText, { backgroundColor: fusionRed }]}>
+            delete deck
+          </Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}

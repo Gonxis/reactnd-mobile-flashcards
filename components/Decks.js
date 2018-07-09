@@ -2,49 +2,25 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { blueHorizon } from '../utils/colors';
 import DeckButton from './DeckButton';
+import { connect } from 'react-redux';
+import { getDecksFromAPI } from '../actions';
 
 class Decks extends Component {
-
-  state = {
-    decks: {
-      React: {
-        title: 'React',
-        questions: [
-          {
-            question: 'What is React?',
-            answer: 'A library for managing user interfaces',
-            remember: 'not long'
-          },
-          {
-            question: 'Where do you make Ajax requests in React?',
-            answer: 'The componentDidMount lifecycle event',
-            remember: 'a while'
-          }
-        ]
-      },
-      JavaScript: {
-        title: 'JavaScript',
-        questions: [
-          {
-            question: 'What is a closure?',
-            answer: 'The combination of a function and the lexical environment within which that function was declared.',
-            remember: 'a lot of time'
-          }
-        ]
-      }
-    }
-  };
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(getDecksFromAPI());
+  }
 
   _keyExtractor = (item, index) => item.title;
 
   render() {
-    const { data, decks } = this.state;
+    const { decks } = this.props;
 
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>decks</Text>
         {
-          Object.keys(decks).length > 0
+          decks !== undefined && Object.keys(decks).length > 0
             ? <FlatList
                 style={{ padding: 5 }}
                 data={Object.keys(decks).map(key => decks[key])}
@@ -82,4 +58,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Decks;
+const mapStateToProps = (reducer) => {
+  return reducer;
+};
+
+export default connect(mapStateToProps)(Decks);
