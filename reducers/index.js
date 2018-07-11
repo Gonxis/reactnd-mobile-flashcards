@@ -30,7 +30,7 @@ const initState = {
   }
 };
 
-export function decksReducer(state = initState, action) {
+export function decksReducer(state = { decks: {} }, action) {
   switch(action.type) {
     case actionTypes.GET_DECKS:
       return {

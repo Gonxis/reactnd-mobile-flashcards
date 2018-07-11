@@ -32,8 +32,9 @@ export function getDecksFromAPI() {
 };
 
 export function addDeckToAPI(deck, key) {
-  return dispatch => {
-    submitDeck(deck, key)
+  return (dispatch, getState) => {
+    const { decks } = getState();
+    submitDeck(decks, deck, key)
       .then(newDeck => {
         dispatch(addDeckToStorage(newDeck));
       });

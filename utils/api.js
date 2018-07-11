@@ -2,17 +2,16 @@ import { AsyncStorage } from 'react-native';
 
 const DECKS_STORAGE_KEY = 'DECKS';
 
-export async function getDecks() {
+export function getDecks() {
   const promise = new Promise(async (resolve, reject) => {
     try {
       const decks = await AsyncStorage.getItem(DECKS_STORAGE_KEY);
-
       if (decks !== null) {
-        resolve(JSON.parse(decks))
+        resolve(JSON.parse(decks));
       } else {
+        await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify({}));
         resolve({});
       }
- 
     } catch (err) {
       reject(err);
     }
@@ -20,39 +19,38 @@ export async function getDecks() {
   return promise;
 };
 
-export function submitDeck(deck, key) {
+export function submitDeck(decks, deck, key) {
   const promise = new Promise(async (resolve, reject) => {
     try {
-      const newDeck = await AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-        [key]: deck
-      }));
-
-      if (newDeck !== null) {
-        resolve(newDeck);
+      decks[key] = deck;
+      const error = await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+      if (!error) {
+        resolve(deck);
+      } else {
+        console.log('no new deck');
+        reject({});
       }
-
     } catch (err) {
       reject(err);
     }
-  })
+  });
   return promise;
 };
 
-export async function deleteDeck(key) {
-  try {
-    const decksUpdated = await AsyncStorage.getItem(DECKS_STORAGE_KEY)
-      .then(results => {
-        const data = JSON.parse(results);
-        data[key] = undefined;
-        delete data[key];
-        AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data));
-      });
-
-    if (decksUpdated !== null) {
-      console.log(decksUpdated);
-      return decksUpdated;
+export function deleteDeck(decks, key) {
+  const promise = new Promise(async (resolve, reject) => {
+    try {
+      delete decks[key];
+      const error = AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+      if(!error) {
+        resolve(decks);
+      } else {
+        reject({});
+      }
+    } catch (err) {
+      reject(err);
+      throw new Error('Error saving new deck in AsyncStorage: ', err);
     }
-  } catch (err) {
-    throw new Error('Error saving new deck in AsyncStorage: ', err);
-  }
+  });
+  return promise;
 };

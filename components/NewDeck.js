@@ -28,9 +28,6 @@ class NewDeck extends Component {
     const key = deck.title;
 
     this.props.dispatch(addDeckToAPI(deck, key));
-
-    // submitDeck(key, deck);
-
     this.props.navigation.goBack();
   }
 
