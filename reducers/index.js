@@ -44,6 +44,12 @@ export function decksReducer(state = { decks: {} }, action) {
           [action.deck.title]: action.deck
         }
       }
+    case actionTypes.REMOVE_DECK:
+      const result = {
+        ...state,
+        decks: action.decks
+      };
+      return result;
     default:
       return state
   }

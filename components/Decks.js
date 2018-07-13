@@ -8,7 +8,14 @@ import { getDecksFromAPI } from '../actions';
 class Decks extends Component {
   componentDidMount() {
     const { dispatch } = this.props;
-    dispatch(getDecksFromAPI());
+
+    this.didFocusListener = this.props.navigation.addListener('willFocus', () => {
+      dispatch(getDecksFromAPI());
+    });
+  }
+
+  componentWillUnmount() {
+    this.didFocusListener.remove();
   }
 
   _keyExtractor = (item, index) => item.title;

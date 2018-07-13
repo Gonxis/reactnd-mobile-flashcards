@@ -25,6 +25,7 @@ export function submitDeck(decks, deck, key) {
       decks[key] = deck;
       const error = await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
       if (!error) {
+        console.log('new deck');
         resolve(deck);
       } else {
         console.log('no new deck');
@@ -41,9 +42,11 @@ export function deleteDeck(decks, key) {
   const promise = new Promise(async (resolve, reject) => {
     try {
       delete decks[key];
-      const error = AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+      const error = await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
       if(!error) {
-        resolve(decks);
+        decks !== {}
+        ? resolve(decks)
+        : resolve({})
       } else {
         reject({});
       }

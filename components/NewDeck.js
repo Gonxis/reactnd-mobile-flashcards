@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { blueHorizon, white, lighterPurple } from '../utils/colors';
-import { submitDeck } from '../utils/api';
 import { connect } from 'react-redux';
 import { addDeckToAPI } from '../actions';
 
@@ -21,15 +20,26 @@ class NewDeck extends Component {
         questions: []
       }
     });
-  }
+  };
+
+  resetState = () => {
+    this.setState({
+      deck: {
+        title: '',
+        questions: []
+      }
+    });
+  };
 
   saveDeck = () => {
     const { deck } = this.state;
+    const { dispatch, navigation } = this.props;
     const key = deck.title;
 
-    this.props.dispatch(addDeckToAPI(deck, key));
-    this.props.navigation.goBack();
-  }
+    dispatch(addDeckToAPI(deck, key));
+    this.resetState();
+    navigation.goBack();
+  };
 
   render() {
     return (

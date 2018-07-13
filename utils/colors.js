@@ -15,7 +15,6 @@ export const randomColors = [
   highBlue,
   orangeHibiscus,
   reptileGreen,
-  fusionRed,
   flirtatious,
   maximumBlueGreen
 ];

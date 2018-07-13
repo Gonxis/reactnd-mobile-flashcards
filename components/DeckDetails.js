@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 import { blueHorizon, white, fusionRed } from '../utils/colors';
 import DeckItem from './DeckItem';
-import { deleteDeck } from '../utils/api';
+import { removeDeckFromAPI } from '../actions';
 
 class DeckDetails extends Component {
 
@@ -13,22 +14,22 @@ class DeckDetails extends Component {
       title: `${item.name} details`
     };
   };
-  
+
+  deleteDeck = () => {
+    const { dispatch, navigation } = this.props;
+    const item = navigation.getParam('item', { name: 'Default' });
+    const key = item.name;
+
+    dispatch(removeDeckFromAPI(key));
+    navigation.goBack();
+  }
+
   render() {
     const item = this.props.navigation.getParam('item', { name: 'Default' });
 
     return (
       <View style={styles.container}>
         <DeckItem item={item} />
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={deleteDeck(item.name)}
-        >
-          <Text style={[styles.buttonText, { backgroundColor: fusionRed }]}>
-            delete deck
-          </Text>
-        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.button}
@@ -45,6 +46,15 @@ class DeckDetails extends Component {
         >
           <Text style={styles.buttonText}>
             add new card
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={this.deleteDeck}
+        >
+          <Text style={[styles.buttonText, { backgroundColor: fusionRed, borderRadius: 50 }]}>
+            delete deck
           </Text>
         </TouchableOpacity>
 
@@ -74,4 +84,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(DeckDetails);
+export default withNavigation(connect()(DeckDetails));

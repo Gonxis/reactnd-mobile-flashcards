@@ -8,14 +8,23 @@ class DeckButton extends Component {
 
   render() {
     const { item } = this.props;
+    const questionsCount = item.questions.length;
 
     return (
       <View style={styles.overflowWorkaround}>
         <View style={styles.badge}>
-          <Text style={[ styles.text, { fontSize: 12 } ]}>55</Text>
+          <Text style={[ styles.text, { fontSize: 12 } ]}>{questionsCount}</Text>
         </View>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('DeckDetails', { item: { name: item.title } })}
+          onPress={() =>
+            this.props.navigation.navigate('DeckDetails',
+            {
+              item: {
+                name: item.title,
+                questions: item.questions
+              }
+            })
+          }
         >
           <View style={[ styles.deck, { backgroundColor: randomItem(randomColors) } ]}>
             <Text style={styles.text}>{item.title}</Text>
