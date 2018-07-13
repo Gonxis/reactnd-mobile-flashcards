@@ -1,10 +1,11 @@
-import { getDecks, submitDeck, deleteDeck } from '../utils/api';
+import { getDecks, submitDeck, deleteDeck, addCard } from '../utils/api';
 
 // Action Type Constants
 export const actionTypes = {
   GET_DECKS: 'GET_DECKS',
   ADD_DECK: 'ADD_DECK',
-  REMOVE_DECK: 'REMOVE_DECK'
+  REMOVE_DECK: 'REMOVE_DECK',
+  ADD_CARD: 'ADD_CARD'
 };
 
 // Action Creators
@@ -29,7 +30,27 @@ export function removeDeckFromStorage(decks) {
   }
 };
 
+export function addCardToStorage(decks) {
+  return {
+    type: actionTypes.ADD_CARD,
+    decks
+  }
+};
+
 // Thunks
+
+// export function getDecksFromAPI(cb = () => {} ) {
+//   return dispatch => {
+//     getDecks()
+//     .then(decks => {
+//         dispatch(getDecksFromStorage(decks));
+//         cb({ success: true });
+//         debugger;
+//       })
+//       .catch(err => cb({ error: err }));
+//     }
+// };
+
 export function getDecksFromAPI() {
   return dispatch => {
     getDecks()
@@ -55,6 +76,16 @@ export function removeDeckFromAPI(key) {
     deleteDeck(decks, key)
     .then(updatedDecks => {
         dispatch(removeDeckFromStorage(updatedDecks));
+      });
+  }
+};
+
+export function addCardToAPI(key, question, answer) {
+  return (dispatch, getState) => {
+    const { decks } = getState();
+    addCard(decks, key, question, answer)
+      .then(updatedDecks => {
+        dispatch(addCardToStorage(updatedDecks));
       });
   }
 };

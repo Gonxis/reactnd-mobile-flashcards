@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { blueHorizon } from '../utils/colors';
 import DeckButton from './DeckButton';
 import { connect } from 'react-redux';
 import { getDecksFromAPI } from '../actions';
 
 class Decks extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
+  state = {
+    loading: true
+  }
 
-    this.didFocusListener = this.props.navigation.addListener('willFocus', () => {
+  componentDidMount() {
+    const { dispatch, navigation } = this.props;
+
+    this.didFocusListener = navigation.addListener('willFocus', () => {
+      // dispatch(getDecksFromAPI(res => {
+      //   debugger;
+      //   if (!res.error) {
+      //     this.setState({ loading: false });
+      //   }
+      // }));
       dispatch(getDecksFromAPI());
     });
   }
@@ -22,22 +32,26 @@ class Decks extends Component {
 
   render() {
     const { decks } = this.props;
+    const { loading } = this.state;
 
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>decks</Text>
+        {/* {
+          loading && <ActivityIndicator size="large" color={blueHorizon} />
+        } */}
         {
           decks !== undefined && Object.keys(decks).length > 0
-            ? <FlatList
-                style={{ padding: 5 }}
-                data={Object.keys(decks).map(key => decks[key])}
-                keyExtractor={this._keyExtractor}
-                renderItem={
-                  ({ item }) =>
-                    <DeckButton item={item} />
-                }
-              />
-            : <Text style={styles.textWarning}>There are no decks yet!</Text>
+          ? <FlatList
+            style={{ padding: 5 }}
+            data={Object.keys(decks).map(key => decks[key])}
+            keyExtractor={this._keyExtractor}
+            renderItem={
+              ({ item }) =>
+                <DeckButton item={item} />
+            }
+          />
+          : <Text style={styles.textWarning}>There are no decks yet!</Text>
         }
       </View>
     );

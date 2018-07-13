@@ -25,10 +25,8 @@ export function submitDeck(decks, deck, key) {
       decks[key] = deck;
       const error = await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
       if (!error) {
-        console.log('new deck');
         resolve(deck);
       } else {
-        console.log('no new deck');
         reject({});
       }
     } catch (err) {
@@ -52,7 +50,36 @@ export function deleteDeck(decks, key) {
       }
     } catch (err) {
       reject(err);
-      throw new Error('Error saving new deck in AsyncStorage: ', err);
+    }
+  });
+  return promise;
+};
+
+export function addCard(decks, key, question, answer) {
+  const promise = new Promise(async (resolve, reject) => {
+    try {
+      const newQuestion = {
+        question,
+        answer,
+        remember: 'not long'
+      };
+
+      const newQuestions = decks[key].questions.concat(newQuestion);
+
+      decks[key] = {
+        ...decks[key],
+        questions: newQuestions
+      };
+
+      const error = await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks));
+
+      if (!error) {
+        resolve(decks);
+      } else {
+        reject({});
+      }
+    } catch (err) {
+      reject(err);
     }
   });
   return promise;

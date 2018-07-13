@@ -5,39 +5,21 @@ import { connect } from 'react-redux';
 import { addDeckToAPI } from '../actions';
 
 class NewDeck extends Component {
-
   state = {
-    deck: {
-      title: '',
-      questions: []
-    }
-  };
+    key: ''
+  }
 
-  onHandleChange = (text) => {
-    this.setState({
-      deck: {
-        title: text,
-        questions: []
-      }
-    });
-  };
-
-  resetState = () => {
-    this.setState({
-      deck: {
-        title: '',
-        questions: []
-      }
-    });
-  };
+  clearInput = () => {
+    this.setState({ key: '' });
+  }
 
   saveDeck = () => {
-    const { deck } = this.state;
+    const { key } = this.state;
     const { dispatch, navigation } = this.props;
-    const key = deck.title;
+    const deck = { title: key, questions: [] };
 
     dispatch(addDeckToAPI(deck, key));
-    this.resetState();
+    this.clearInput();
     navigation.goBack();
   };
 
@@ -49,8 +31,8 @@ class NewDeck extends Component {
           style={styles.input}
           underlineColorAndroid={lighterPurple}
           placeholder="deck name"
-          onChangeText={text => this.onHandleChange(text)}
-          value={this.state.deck.title}
+          onChangeText={(text) => this.setState({ key: text })}
+          value={this.state.key}
         />
         <TouchableOpacity
           style={styles.button}

@@ -45,11 +45,15 @@ export function decksReducer(state = { decks: {} }, action) {
         }
       }
     case actionTypes.REMOVE_DECK:
-      const result = {
+      return {
         ...state,
         decks: action.decks
-      };
-      return result;
+      }
+    case actionTypes.ADD_CARD:
+      return {
+        ...state,
+        decks: action.decks
+      }
     default:
       return state
   }
