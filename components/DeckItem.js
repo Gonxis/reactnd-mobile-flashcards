@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { withNavigation } from 'react-navigation';
 import { white, black, blueHorizon, randomColors } from '../utils/colors';
 import { randomItem } from '../utils/helpers';
 
 class DeckItem extends Component {
+  state = {
+    questionsCount: 0
+  }
+
+  componentDidMount() {
+    const { decks, navigation, item} = this.props;
+
+    this.didFocusListener = navigation.addListener('willFocus', () => {
+      this.setState({ questionsCount: decks[item.name].questions.length });
+    });
+  }
 
   render() {
     const { item } = this.props;
-    const questionsCount = item.questions.length;
 
     return (
       <View style={styles.overflowWorkaround}>
         <View style={styles.badge}>
-          <Text style={[styles.text, { fontSize: 12 }]}>{questionsCount}</Text>
+          <Text style={[styles.text, { fontSize: 12 }]}>{this.state.questionsCount}</Text>
         </View>
         <View style={[styles.deck, { backgroundColor: randomItem(randomColors) }]}>
           <Text style={styles.text}>{item.name}</Text>
@@ -58,4 +70,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckItem;
+const mapStateToProps = (reducer) => {
+  return reducer;
+};
+
+export default withNavigation(connect(mapStateToProps)(DeckItem));
