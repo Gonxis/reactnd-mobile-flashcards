@@ -38,19 +38,6 @@ export function addCardToStorage(decks) {
 };
 
 // Thunks
-
-// export function getDecksFromAPI(cb = () => {} ) {
-//   return dispatch => {
-//     getDecks()
-//     .then(decks => {
-//         dispatch(getDecksFromStorage(decks));
-//         cb({ success: true });
-//         debugger;
-//       })
-//       .catch(err => cb({ error: err }));
-//     }
-// };
-
 export function getDecksFromAPI() {
   return dispatch => {
     getDecks()
@@ -62,8 +49,8 @@ export function getDecksFromAPI() {
 
 export function addDeckToAPI(deck, key) {
   return (dispatch, getState) => {
-    const { decks } = getState();
-    submitDeck(decks, deck, key)
+    const { decksReducer } = getState();
+    submitDeck(decksReducer.decks, deck, key)
       .then(newDeck => {
         dispatch(addDeckToStorage(newDeck));
       });
@@ -72,8 +59,8 @@ export function addDeckToAPI(deck, key) {
 
 export function removeDeckFromAPI(key) {
   return (dispatch, getState) => {
-    const { decks } = getState();
-    deleteDeck(decks, key)
+    const { decksReducer } = getState();
+    deleteDeck(decksReducer.decks, key)
     .then(updatedDecks => {
         dispatch(removeDeckFromStorage(updatedDecks));
       });
@@ -82,8 +69,8 @@ export function removeDeckFromAPI(key) {
 
 export function addCardToAPI(key, question, answer) {
   return (dispatch, getState) => {
-    const { decks } = getState();
-    addCard(decks, key, question, answer)
+    const { decksReducer } = getState();
+    addCard(decksReducer.decks, key, question, answer)
       .then(updatedDecks => {
         dispatch(addCardToStorage(updatedDecks));
       });

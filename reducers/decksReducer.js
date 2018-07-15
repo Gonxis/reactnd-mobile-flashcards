@@ -1,4 +1,4 @@
-import { actionTypes } from '../actions';
+import { actionTypes } from '../actions/decksActions';
 
 const initState = {
   decks: {
@@ -58,5 +58,3 @@ export function decksReducer(state = { decks: {} }, action) {
       return state
   }
 };
-
-export default decksReducer;

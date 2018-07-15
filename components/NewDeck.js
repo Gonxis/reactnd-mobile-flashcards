@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { blueHorizon, white, lighterPurple } from '../utils/colors';
 import { connect } from 'react-redux';
-import { addDeckToAPI } from '../actions';
+import { addDeckToAPI } from '../actions/decksActions';
 
 class NewDeck extends Component {
   state = {

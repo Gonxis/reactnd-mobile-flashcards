@@ -1,25 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { blueHorizon } from '../utils/colors';
 import DeckButton from './DeckButton';
 import { connect } from 'react-redux';
-import { getDecksFromAPI } from '../actions';
+import { getDecksFromAPI } from '../actions/decksActions';
 
 class Decks extends Component {
-  state = {
-    loading: true
-  }
-
   componentDidMount() {
     const { dispatch, navigation } = this.props;
 
     this.didFocusListener = navigation.addListener('willFocus', () => {
-      // dispatch(getDecksFromAPI(res => {
-      //   debugger;
-      //   if (!res.error) {
-      //     this.setState({ loading: false });
-      //   }
-      // }));
       dispatch(getDecksFromAPI());
     });
   }
@@ -32,14 +22,10 @@ class Decks extends Component {
 
   render() {
     const { decks } = this.props;
-    const { loading } = this.state;
 
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>decks</Text>
-        {/* {
-          loading && <ActivityIndicator size="large" color={blueHorizon} />
-        } */}
         {
           decks !== undefined && Object.keys(decks).length > 0
           ? <FlatList
@@ -79,8 +65,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (reducer) => {
-  return reducer;
+const mapStateToProps = ({ decksReducer }) => {
+  return decksReducer;
 };
 
 export default connect(mapStateToProps)(Decks);

@@ -4,13 +4,9 @@ import { connect } from 'react-redux';
 import { blueHorizon, white, highBlue, black } from '../utils/colors';
 
 class QuizQuestion extends Component {
-
-  static navigationOptions = ({ navigation }) => {
-    const item = navigation.getParam('item', { name: 'Default' });
-    return {
-      title: `${item.name} quiz - Question`
-    };
-  };
+  restart = () => {
+    console.log('restart');
+  }
 
   render() {
     const { navigation, quiz } = this.props;
@@ -18,24 +14,28 @@ class QuizQuestion extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>{`${quiz.currentIndex + 1}/${item.questions.length}`}</Text>
         <View style={styles.deck}>
-          <Text style={styles.text}>{item.questions[quiz.currentIndex].question}</Text>
+          <Text style={styles.text}>You got {quiz.score/item.questions.length}% questions right!</Text>
         </View>
+
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('QuizAnswer',
-            {
-              item: {
-                name: item.name,
-                questions: item.questions
-              }
-            })}
+          onPress={() => this.restart}
         >
           <Text style={styles.buttonText}>
-            view answer
+            restart quiz
           </Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Home')}
+        >
+          <Text style={styles.buttonText}>
+            back to decks
+          </Text>
+        </TouchableOpacity>
+
       </View>
     );
   }

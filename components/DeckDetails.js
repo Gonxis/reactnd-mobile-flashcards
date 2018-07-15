@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { blueHorizon, white, fusionRed } from '../utils/colors';
 import DeckItem from './DeckItem';
-import { removeDeckFromAPI } from '../actions';
+import { removeDeckFromAPI } from '../actions/decksActions';
 
 class DeckDetails extends Component {
 
@@ -17,7 +17,7 @@ class DeckDetails extends Component {
 
   deleteDeck = () => {
     const { dispatch, navigation } = this.props;
-    const item = navigation.getParam('item', { name: 'Default' });
+    const item = navigation.getParam('item', { name: 'Default', questions: [] });
     const key = item.name;
 
     dispatch(removeDeckFromAPI(key));
@@ -25,7 +25,8 @@ class DeckDetails extends Component {
   }
 
   render() {
-    const item = this.props.navigation.getParam('item', { name: 'Default' });
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', { name: 'Default', questions: [] });
 
     return (
       <View style={styles.container}>
@@ -33,7 +34,13 @@ class DeckDetails extends Component {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => { }}
+          onPress={() => navigation.navigate('QuizQuestion',
+          {
+            item: {
+              name: item.name,
+              questions: item.questions
+            }
+          })}
         >
           <Text style={styles.buttonText}>
             start quiz
@@ -42,7 +49,7 @@ class DeckDetails extends Component {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => this.props.navigation.navigate('NewCard', { item: { name: item.name } })}
+          onPress={() => navigation.navigate('NewCard', { item: { name: item.name } })}
         >
           <Text style={styles.buttonText}>
             add new card
@@ -84,4 +91,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(connect()(DeckDetails));
+const mapStateToProps = ({ decksReducer }) => {
+  return decksReducer;
+};
+
+export default withNavigation(connect(mapStateToProps)(DeckDetails));

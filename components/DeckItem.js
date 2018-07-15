@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (reducer) => {
-  return reducer;
+const mapStateToProps = ({ decksReducer }) => {
+  return decksReducer;
 };
 
 export default withNavigation(connect(mapStateToProps)(DeckItem));

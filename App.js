@@ -4,6 +4,9 @@ import { createStackNavigator } from 'react-navigation';
 import { Tabs } from './components/Tabs';
 import DeckDetails from './components/DeckDetails';
 import NewCard from './components/NewCard';
+import QuizQuestion from './components/QuizQuestion';
+import QuizAnswer from './components/QuizAnswer';
+import GameOver from './components/GameOver';
 import { white, lighterPurple, gloomyPurple } from './utils/colors';
 import { Provider } from 'react-redux';
 import Store from './store';
@@ -21,6 +24,18 @@ const Stack = createStackNavigator(
     },
     NewCard: {
       screen: NewCard
+    },
+    QuizQuestion: {
+      screen: QuizQuestion
+    },
+    QuizAnswer: {
+      screen: QuizAnswer
+    },
+    GameOver: {
+      screen: GameOver,
+      navigationOptions: () => ({
+        title: 'Game Over',
+      })
     }
   },
   {

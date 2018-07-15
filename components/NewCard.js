@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { blueHorizon, white, lighterPurple } from '../utils/colors';
-import { addCardToAPI } from '../actions';
+import { addCardToAPI } from '../actions/decksActions';
 
 class NewCard extends Component {
   state = {
