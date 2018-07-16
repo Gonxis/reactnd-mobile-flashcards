@@ -1,26 +1,58 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
+import { StackActions, NavigationActions } from 'react-navigation';
 import { blueHorizon, white, highBlue, black } from '../utils/colors';
+import { quizReset } from '../actions/quizActions';
 
 class QuizQuestion extends Component {
   restart = () => {
-    console.log('restart');
+    const { dispatch, navigation } = this.props;
+    const item = navigation.getParam('item', { title: 'Default', questions: [] });
+    dispatch(quizReset(0, 0, true));
+    navigation.navigate('QuizQuestion',
+      {
+        item: {
+          name: item.name,
+          questions: item.questions
+        }
+      }
+    );
+  }
+
+  goBackToDeck = () => {
+    const { dispatch, navigation } = this.props;
+    const item = navigation.getParam('item', { title: 'Default', questions: [] });
+    dispatch(quizReset(0, 0, true));
+    navigation.navigate('DeckDetails',
+      {
+        item: {
+          name: item.name,
+          questions: item.questions
+        }
+      }
+    );
   }
 
   render() {
     const { navigation, quiz } = this.props;
     const item = navigation.getParam('item', { name: 'Default', questions: [] });
+    const resetAction = StackActions.reset({
+      index: 0,
+      actions: [NavigationActions.navigate({ routeName: 'Home' })]
+    });
 
     return (
       <View style={styles.container}>
         <View style={styles.deck}>
-          <Text style={styles.text}>You got {quiz.score/item.questions.length}% questions right!</Text>
+          <Text style={styles.text}>
+            You got {quiz.score} out of {item.questions.length} questions right!
+          </Text>
         </View>
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => this.restart}
+          onPress={this.restart}
         >
           <Text style={styles.buttonText}>
             restart quiz
@@ -29,10 +61,10 @@ class QuizQuestion extends Component {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Home')}
+          onPress={this.goBackToDeck}
         >
           <Text style={styles.buttonText}>
-            back to decks
+            back to {item.name}
           </Text>
         </TouchableOpacity>
 

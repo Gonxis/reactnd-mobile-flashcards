@@ -32,6 +32,22 @@ export function quizReducer(state = initState, action) {
           isDone: action.isDone
         }
       }
+    case actionTypes.QUIZ_RESET:
+      return {
+        quiz: {
+          ...state.quiz,
+          currentIndex: action.currentIndex,
+          score: action.score,
+          isDone: action.isDone
+        }
+      }
+    case actionTypes.UPDATE_SCORE:
+      return {
+        quiz: {
+          ...state.quiz,
+          score: action.score
+        }
+      }
     default:
       return state
   }

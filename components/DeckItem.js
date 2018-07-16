@@ -6,25 +6,25 @@ import { white, black, blueHorizon, randomColors } from '../utils/colors';
 import { randomItem } from '../utils/helpers';
 
 class DeckItem extends Component {
-  state = {
-    questionsCount: 0
-  }
+  // state = {
+  //   questionsCount: 0
+  // }
 
-  componentDidMount() {
-    const { decks, navigation, item} = this.props;
+  // componentDidMount() {
+  //   const { decks, navigation, item} = this.props;
 
-    this.didFocusListener = navigation.addListener('willFocus', () => {
-      this.setState({ questionsCount: decks[item.name].questions.length });
-    });
-  }
+  //   this.didFocusListener = navigation.addListener('willFocus', () => {
+  //     this.setState({ questionsCount: decks[item.name].questions.length });
+  //   });
+  // }
 
   render() {
-    const { item } = this.props;
+    const { item, questionsCount } = this.props;
 
     return (
       <View style={styles.overflowWorkaround}>
         <View style={styles.badge}>
-          <Text style={[styles.text, { fontSize: 12 }]}>{this.state.questionsCount}</Text>
+          <Text style={[styles.text, { fontSize: 12 }]}>{questionsCount}</Text>
         </View>
         <View style={[styles.deck, { backgroundColor: randomItem(randomColors) }]}>
           <Text style={styles.text}>{item.name}</Text>

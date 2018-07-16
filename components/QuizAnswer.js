@@ -3,13 +3,13 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { blueHorizon, white, highBlue, black, reptileGreen, fusionRed } from '../utils/colors';
-import { quizCorrect, quizIncorrect } from '../actions/quizActions';
+import { quizCorrect, quizIncorrect, updateScore } from '../actions/quizActions';
 
 class QuizAnswer extends Component {
   static navigationOptions = ({ navigation }) => {
-    const deck = navigation.getParam('deck', { title: 'Default' });
+    const item = navigation.getParam('item', { name: 'Default' });
     return {
-      title: `${deck.title} quiz - Answer`
+      title: `${item.name} quiz - Answer`
     };
   };
 
@@ -17,10 +17,17 @@ class QuizAnswer extends Component {
     const { dispatch, navigation, quiz } = this.props;
     const index = quiz.currentIndex + 1;
     const score = quiz.score + 1;
-    const item = navigation.getParam('item', { title: 'Default', questions: [] });
+    const item = navigation.getParam('item', { name: 'Default', questions: [] });
 
     if (index === item.questions.length) {
-      console.log('game over');
+      dispatch(updateScore(score));
+      navigation.navigate('GameOver',
+        {
+          item: {
+            name: item.name,
+            questions: item.questions
+          }
+        });
       return;
     }
 
@@ -29,14 +36,20 @@ class QuizAnswer extends Component {
   }
 
   incorrectAnswer = () => {
-    const { navigation, quiz } = this.props;
+    const { dispatch, navigation, quiz } = this.props;
     const index = quiz.currentIndex + 1;
-    const item = navigation.getParam('item', { title: 'Default', questions: [] });
+    const item = navigation.getParam('item', { name: 'Default', questions: [] });
 
     navigation.goBack();
 
     if (index === item.questions.length) {
-      console.log('game over');
+      navigation.navigate('GameOver',
+        {
+          item: {
+            name: item.name,
+            questions: item.questions
+          }
+        });
       return;
     }
 
@@ -51,7 +64,7 @@ class QuizAnswer extends Component {
       <View style={styles.container}>
         <Text>{`${quiz.currentIndex + 1}/${item.questions.length}`}</Text>
         <View style={styles.deck}>
-          <Text style={styles.text}>Answer: {item.questions[quiz.currentIndex].answer}</Text>
+          <Text style={styles.text}>{item.questions[quiz.currentIndex].answer}</Text>
         </View>
         <TouchableOpacity
           style={styles.button}

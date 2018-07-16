@@ -7,11 +7,29 @@ import DeckItem from './DeckItem';
 import { removeDeckFromAPI } from '../actions/decksActions';
 
 class DeckDetails extends Component {
+  state = {
+    questionsCount: 0,
+    deck: {}
+  }
+
+  componentDidMount() {
+    const { decks, navigation } = this.props;
+    const item = navigation.getParam('item', { name: 'Default', questions: [] });
+
+    this.didFocusListener = navigation.addListener('willFocus', () => {
+      this.setState(
+        {
+          questionsCount: decks[item.name].questions.length,
+          deck: decks[item.name]
+        }
+      );
+    });
+  }
 
   static navigationOptions = ({ navigation }) => {
     const item = navigation.getParam('item', { name: 'Default' });
     return {
-      title: `${item.name} details`
+      title: `${item.name} deck`
     };
   };
 
@@ -26,11 +44,12 @@ class DeckDetails extends Component {
 
   render() {
     const { navigation } = this.props;
+    const { deck } = this.state;
     const item = navigation.getParam('item', { name: 'Default', questions: [] });
 
     return (
       <View style={styles.container}>
-        <DeckItem item={item} />
+        <DeckItem item={item} questionsCount={this.state.questionsCount} />
 
         <TouchableOpacity
           style={styles.button}
@@ -38,7 +57,7 @@ class DeckDetails extends Component {
           {
             item: {
               name: item.name,
-              questions: item.questions
+              questions: deck.questions
             }
           })}
         >

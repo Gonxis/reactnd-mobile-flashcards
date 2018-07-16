@@ -34,7 +34,7 @@ const Stack = createStackNavigator(
     GameOver: {
       screen: GameOver,
       navigationOptions: () => ({
-        title: 'Game Over',
+        title: 'Game over',
       })
     }
   },
