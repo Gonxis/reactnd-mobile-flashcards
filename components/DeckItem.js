@@ -1,23 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { connect } from 'react-redux';
-import { withNavigation } from 'react-navigation';
 import { white, black, blueHorizon, randomColors } from '../utils/colors';
 import { randomItem } from '../utils/helpers';
 
 class DeckItem extends Component {
-  // state = {
-  //   questionsCount: 0
-  // }
-
-  // componentDidMount() {
-  //   const { decks, navigation, item} = this.props;
-
-  //   this.didFocusListener = navigation.addListener('willFocus', () => {
-  //     this.setState({ questionsCount: decks[item.name].questions.length });
-  //   });
-  // }
-
   render() {
     const { item, questionsCount } = this.props;
 
@@ -70,8 +56,4 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = ({ decksReducer }) => {
-  return decksReducer;
-};
-
-export default withNavigation(connect(mapStateToProps)(DeckItem));
+export default DeckItem;

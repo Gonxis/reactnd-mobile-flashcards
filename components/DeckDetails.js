@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import { blueHorizon, white, fusionRed } from '../utils/colors';
@@ -42,24 +42,41 @@ class DeckDetails extends Component {
     navigation.goBack();
   }
 
-  render() {
+  startQuiz = () => {
     const { navigation } = this.props;
     const { deck } = this.state;
+
+    deck.questions.length > 0
+    ? navigation.navigate('QuizQuestion',
+      {
+        item: {
+          name: deck.title,
+          questions: deck.questions
+        }
+      }
+    )
+    : Alert.alert(
+      'Warning',
+      'There are no cards in this deck yet. Please add at least one card before you start the quiz.',
+      [
+        { text: 'OK', onPress: () => console.log('Alert: no cards') },
+      ],
+      { cancelable: false }
+    )
+  }
+
+  render() {
+    const { navigation } = this.props;
+    const { questionsCount } = this.state;
     const item = navigation.getParam('item', { name: 'Default', questions: [] });
 
     return (
       <View style={styles.container}>
-        <DeckItem item={item} questionsCount={this.state.questionsCount} />
+        <DeckItem item={item} questionsCount={questionsCount} />
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('QuizQuestion',
-          {
-            item: {
-              name: item.name,
-              questions: deck.questions
-            }
-          })}
+          onPress={this.startQuiz}
         >
           <Text style={styles.buttonText}>
             start quiz
