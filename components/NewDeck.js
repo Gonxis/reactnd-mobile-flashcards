@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { blueHorizon, white, lighterPurple } from '../utils/colors';
 import { connect } from 'react-redux';
 import { addDeckToAPI } from '../actions/decksActions';
@@ -15,8 +15,20 @@ class NewDeck extends Component {
 
   saveDeck = () => {
     const { key } = this.state;
-    const { dispatch, navigation } = this.props;
+    const { dispatch, navigation, decks } = this.props;
     const deck = { title: key, questions: [] };
+
+    if (decks[key]) {
+      Alert.alert(
+        'Warning',
+        'There already exists a deck with this name. Please choose another name.',
+        [
+          { text: 'OK', onPress: () => console.log('Alert: deck already exists') },
+        ],
+        { cancelable: false }
+      );
+      return;
+    }
 
     dispatch(addDeckToAPI(deck, key));
     this.clearInput();
@@ -24,6 +36,8 @@ class NewDeck extends Component {
   };
 
   render() {
+    const { key } = this.state;
+
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>choose a title for your new deck</Text>
@@ -32,7 +46,7 @@ class NewDeck extends Component {
           underlineColorAndroid={lighterPurple}
           placeholder="deck name"
           onChangeText={(text) => this.setState({ key: text })}
-          value={this.state.key}
+          value={key}
         />
         <TouchableOpacity
           style={styles.button}
@@ -80,4 +94,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default connect()(NewDeck);
+const mapStateToProps = ({ decksReducer }) => {
+  return decksReducer;
+};
+
+export default connect(mapStateToProps)(NewDeck);
