@@ -38,7 +38,14 @@ class NewDeck extends Component {
 
     dispatch(addDeckToAPI(deck, key));
     this.clearInput();
-    navigation.goBack();
+    navigation.navigate('DeckDetails',
+      {
+        item: {
+          name: deck.title,
+          questions: deck.questions
+        }
+      }
+    )
   };
 
   render() {

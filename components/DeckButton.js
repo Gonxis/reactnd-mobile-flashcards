@@ -19,7 +19,8 @@ const DeckButton = ({ item, navigation }) => {
                 name: item.title,
                 questions: item.questions
               }
-            })
+            }
+          )
         }
       >
         <View style={[styles.deck, { backgroundColor: randomItem(randomColors) }]}>
