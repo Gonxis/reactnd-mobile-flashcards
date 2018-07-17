@@ -1,39 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { white, black, blueHorizon, randomColors } from '../utils/colors';
 import { randomItem } from '../utils/helpers';
 
-class DeckButton extends Component {
-
-  render() {
-    const { item } = this.props;
-    const questionsCount = item.questions.length;
-
-    return (
-      <View style={styles.overflowWorkaround}>
-        <View style={styles.badge}>
-          <Text style={[ styles.text, { fontSize: 12 } ]}>{questionsCount}</Text>
-        </View>
-        <TouchableOpacity
-          onPress={() =>
-            this.props.navigation.navigate('DeckDetails',
+const DeckButton = ({ item, navigation }) => {
+  const questionsCount = item.questions.length;
+  return (
+    <View style={styles.overflowWorkaround}>
+      <View style={styles.badge}>
+        <Text style={[styles.text, { fontSize: 12 }]}>{questionsCount}</Text>
+      </View>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('DeckDetails',
             {
               item: {
                 name: item.title,
                 questions: item.questions
               }
             })
-          }
-        >
-          <View style={[ styles.deck, { backgroundColor: randomItem(randomColors) } ]}>
-            <Text style={styles.text}>{item.title}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+        }
+      >
+        <View style={[styles.deck, { backgroundColor: randomItem(randomColors) }]}>
+          <Text style={styles.text}>{item.title}</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   overflowWorkaround: {

@@ -10,6 +10,10 @@ class QuizAnswer extends Component {
     show: true
   }
 
+  /**
+  * @description Sets some options for Stack navigation
+  * @param {function} navigation - Function provided by react-navigation v2
+  */
   static navigationOptions = ({ navigation }) => {
     const item = navigation.getParam('item', { name: 'Default' });
     return {
@@ -17,6 +21,9 @@ class QuizAnswer extends Component {
     };
   };
 
+  /**
+  * @description Computes correct answers and goes to GameOver when there are no more cards to answer
+  */
   correctAnswer = () => {
     const { dispatch, navigation, quiz } = this.props;
     const index = quiz.currentIndex + 1;
@@ -40,6 +47,9 @@ class QuizAnswer extends Component {
     this.setState({ show: false });
   }
 
+  /**
+  * @description Computes incorrect answers and goes to GameOver when there are no more cards to answer
+  */
   incorrectAnswer = () => {
     const { dispatch, navigation, quiz } = this.props;
     const index = quiz.currentIndex + 1;

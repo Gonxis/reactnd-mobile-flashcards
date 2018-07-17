@@ -6,10 +6,16 @@ import { quizReset } from '../actions/quizActions';
 import { clearLocalNotifications, setLocalNotification } from '../utils/helpers';
 
 class GameOver extends Component {
+  /**
+  * @description Clears all local notifications previously set and sets a new one for the following day
+  */
   componentDidMount() {
     clearLocalNotifications().then(setLocalNotification);
   }
 
+  /**
+  * @description Restarts the quiz
+  */
   restart = () => {
     const { dispatch, navigation } = this.props;
     const item = navigation.getParam('item', { title: 'Default', questions: [] });
@@ -24,6 +30,9 @@ class GameOver extends Component {
     );
   }
 
+  /**
+  * @description Goes beck to deck details view
+  */
   goBackToDeck = () => {
     const { dispatch, navigation } = this.props;
     const item = navigation.getParam('item', { title: 'Default', questions: [] });

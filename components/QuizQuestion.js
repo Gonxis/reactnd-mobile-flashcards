@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import { blueHorizon, white, highBlue, black } from '../utils/colors';
 
 class QuizQuestion extends Component {
-
+  /**
+  * @description Sets some options for Stack navigation
+  * @param {function} navigation - Function provided by react-navigation v2
+  */
   static navigationOptions = ({ navigation }) => {
     const item = navigation.getParam('item', { name: 'Default' });
     return {

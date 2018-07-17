@@ -12,6 +12,9 @@ class DeckDetails extends Component {
     deck: {}
   }
 
+  /**
+  * @description Reloads deck and question counter data when component gains focus
+  */
   componentDidMount() {
     const { decks, navigation } = this.props;
     const item = navigation.getParam('item', { name: 'Default', questions: [] });
@@ -26,6 +29,17 @@ class DeckDetails extends Component {
     });
   }
 
+  /**
+  * @description Removes focus listener
+  */
+  componentWillUnmount() {
+    this.didFocusListener.remove();
+  }
+
+  /**
+  * @description Sets some options for Stack navigation
+  * @param {function} navigation - Function provided by react-navigation v2
+  */
   static navigationOptions = ({ navigation }) => {
     const item = navigation.getParam('item', { name: 'Default' });
     return {
@@ -33,6 +47,9 @@ class DeckDetails extends Component {
     };
   };
 
+  /**
+  * @description Deletes a deck
+  */
   deleteDeck = () => {
     const { dispatch, navigation } = this.props;
     const item = navigation.getParam('item', { name: 'Default', questions: [] });
@@ -42,6 +59,9 @@ class DeckDetails extends Component {
     navigation.goBack();
   }
 
+  /**
+  * @description Starts a new quiz
+  */
   startQuiz = () => {
     const { navigation } = this.props;
     const { deck } = this.state;

@@ -51,6 +51,10 @@ const Stack = createStackNavigator(
 );
 
 export default class App extends Component {
+
+  /**
+  * @description Sets a new notification for tomorrow at 18:00
+  */
   componentDidMount() {
     setLocalNotification();
   }

@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { getDecksFromAPI } from '../actions/decksActions';
 
 class Decks extends Component {
+  /**
+  * @description Reloads decks data when component gains focus
+  */
   componentDidMount() {
     const { dispatch, navigation } = this.props;
 
@@ -14,10 +17,16 @@ class Decks extends Component {
     });
   }
 
+  /**
+  * @description Removes focus listener
+  */
   componentWillUnmount() {
     this.didFocusListener.remove();
   }
 
+  /**
+  * @description Extracts key for FlatList item
+  */
   _keyExtractor = (item, index) => item.title;
 
   render() {

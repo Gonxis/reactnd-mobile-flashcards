@@ -1,24 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { white, black, blueHorizon, randomColors } from '../utils/colors';
 import { randomItem } from '../utils/helpers';
 
-class DeckItem extends Component {
-  render() {
-    const { item, questionsCount } = this.props;
-
-    return (
-      <View style={styles.overflowWorkaround}>
-        <View style={styles.badge}>
-          <Text style={[styles.text, { fontSize: 12 }]}>{questionsCount}</Text>
-        </View>
-        <View style={[styles.deck, { backgroundColor: randomItem(randomColors) }]}>
-          <Text style={styles.text}>{item.name}</Text>
-        </View>
-      </View>
-    );
-  }
-}
+const DeckItem = ({ item, questionsCount }) => (
+  <View style={styles.overflowWorkaround}>
+    <View style={styles.badge}>
+      <Text style={[styles.text, { fontSize: 12 }]}>{questionsCount}</Text>
+    </View>
+    <View style={[styles.deck, { backgroundColor: randomItem(randomColors) }]}>
+      <Text style={styles.text}>{item.name}</Text>
+    </View>
+  </View>
+);
 
 const styles = StyleSheet.create({
   overflowWorkaround: {

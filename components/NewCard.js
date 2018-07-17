@@ -11,6 +11,10 @@ class NewCard extends Component {
     answer: ''
   };
 
+  /**
+  * @description Sets some options for Stack navigation
+  * @param {function} navigation - Function provided by react-navigation v2
+  */
   static navigationOptions = ({ navigation }) => {
     const item = navigation.getParam('item', { name: 'Default' });
     return {
@@ -18,6 +22,9 @@ class NewCard extends Component {
     };
   };
 
+  /**
+  * @description Saves a new card
+  */
   saveCard = () => {
     const { dispatch, navigation } = this.props;
     const { question, answer } = this.state;

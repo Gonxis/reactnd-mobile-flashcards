@@ -9,10 +9,16 @@ class NewDeck extends Component {
     key: ''
   }
 
+  /**
+  * @description Clears deck name input
+  */
   clearInput = () => {
     this.setState({ key: '' });
   }
 
+  /**
+  * @description Saves a new deck
+  */
   saveDeck = () => {
     const { key } = this.state;
     const { dispatch, navigation, decks } = this.props;
