@@ -5,7 +5,7 @@ import { blueHorizon, white, highBlue, black } from '../utils/colors';
 import { quizReset } from '../actions/quizActions';
 import { clearLocalNotifications, setLocalNotification } from '../utils/helpers';
 
-class QuizQuestion extends Component {
+class GameOver extends Component {
   componentDidMount() {
     clearLocalNotifications().then(setLocalNotification);
   }
@@ -115,4 +115,4 @@ const mapStateToProps = ({ quizReducer }) => {
   return quizReducer;
 };
 
-export default connect(mapStateToProps)(QuizQuestion);
+export default connect(mapStateToProps)(GameOver);
