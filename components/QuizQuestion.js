@@ -18,7 +18,7 @@ class QuizQuestion extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>{`${quiz.currentIndex + 1}/${item.questions.length}`}</Text>
+        <Text>{`${quiz.currentIndex + 1} of ${item.questions.length}`}</Text>
         <View style={styles.deck}>
           <Text style={styles.text}>{item.questions[quiz.currentIndex].question}</Text>
         </View>

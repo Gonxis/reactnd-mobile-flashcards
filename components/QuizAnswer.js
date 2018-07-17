@@ -6,6 +6,10 @@ import { blueHorizon, white, highBlue, black, reptileGreen, fusionRed } from '..
 import { quizCorrect, quizIncorrect, updateScore } from '../actions/quizActions';
 
 class QuizAnswer extends Component {
+  state = {
+    show: true
+  }
+
   static navigationOptions = ({ navigation }) => {
     const item = navigation.getParam('item', { name: 'Default' });
     return {
@@ -33,6 +37,7 @@ class QuizAnswer extends Component {
 
     navigation.goBack();
     dispatch(quizCorrect(index, score));
+    this.setState({ show: false });
   }
 
   incorrectAnswer = () => {
@@ -54,17 +59,21 @@ class QuizAnswer extends Component {
     }
 
     dispatch(quizIncorrect(index));
+    this.setState({ show: false });
   }
 
   render() {
     const { navigation, quiz } = this.props;
+    const { show } = this.state;
     const item = navigation.getParam('item', { title: 'Default', questions: [] });
 
     return (
       <View style={styles.container}>
-        <Text>{`${quiz.currentIndex + 1}/${item.questions.length}`}</Text>
+        <Text>{`${quiz.currentIndex + 1} of ${item.questions.length}`}</Text>
         <View style={styles.deck}>
-          <Text style={styles.text}>{item.questions[quiz.currentIndex].answer}</Text>
+          {
+            show && <Text style={styles.text}>{item.questions[quiz.currentIndex].answer}</Text>
+          }
         </View>
         <TouchableOpacity
           style={styles.button}
