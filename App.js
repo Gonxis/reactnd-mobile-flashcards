@@ -8,6 +8,7 @@ import QuizQuestion from './components/QuizQuestion';
 import QuizAnswer from './components/QuizAnswer';
 import GameOver from './components/GameOver';
 import { white, lighterPurple, gloomyPurple } from './utils/colors';
+import { setLocalNotification } from './utils/helpers';
 import { Provider } from 'react-redux';
 import Store from './store';
 
@@ -50,6 +51,10 @@ const Stack = createStackNavigator(
 );
 
 export default class App extends Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
   render() {
     return (
       <Provider store={Store}>

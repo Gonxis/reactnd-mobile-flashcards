@@ -57,7 +57,8 @@ Tests will be coming soon.
 
 ### Known issues
 
-This app has Promises in it and it's known that expo can ignore some of them and never resolve them. To fix this, please close expo and open it again along with the app. If the issue persists clear expo data and cache on your phone.
+- This app has Promises in it and it's known that expo can ignore some of them and never resolve them. To fix this, please close expo and open it again along with the app. If the issue persists clear expo data and cache on your phone. You can see an issue about this [here](https://github.com/facebook/react-native/issues/6679).
+- You may need to make sure your phone and PC have the same time, otherwise [an error](https://github.com/facebook/react-native/issues/5823) will show up.
 
 ## Built With
 

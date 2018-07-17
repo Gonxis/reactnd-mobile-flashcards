@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { StackActions, NavigationActions } from 'react-navigation';
 import { blueHorizon, white, highBlue, black } from '../utils/colors';
 import { quizReset } from '../actions/quizActions';
+import { clearLocalNotifications, setLocalNotification } from '../utils/helpers';
 
 class QuizQuestion extends Component {
+  componentDidMount() {
+    clearLocalNotifications().then(setLocalNotification);
+  }
+
   restart = () => {
     const { dispatch, navigation } = this.props;
     const item = navigation.getParam('item', { title: 'Default', questions: [] });
@@ -37,10 +41,6 @@ class QuizQuestion extends Component {
   render() {
     const { navigation, quiz } = this.props;
     const item = navigation.getParam('item', { name: 'Default', questions: [] });
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [NavigationActions.navigate({ routeName: 'Home' })]
-    });
 
     return (
       <View style={styles.container}>
